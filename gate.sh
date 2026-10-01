@@ -18,7 +18,7 @@
 export PATH="$HOME/.elan/bin:$PATH"
 cd "$(dirname "$0")" || exit 1
 LIB="Casey"
-REQUIRED="Casey.casey Casey.casey_of_le Casey.casey_zero_radii_eq_ptolemy Casey.cospherical_of_dist_eq Casey.dist_tangentCentre_center Casey.dist_tangentCentre_sq_sub_sq Casey.tangentCentre Casey.tangentCentre_spec Casey.tangentCentre_spec_external Casey.tangentCentre_zero Casey.tangentLength Casey.tangentLength_tangentCentre Casey.tangentLength_zero"
+REQUIRED="Casey.casey Casey.casey_of_le Casey.casey_zero_radii_eq_ptolemy Casey.collinear_tangentCentre Casey.cospherical_of_dist_eq Casey.dist_tangentCentre_center Casey.dist_tangentCentre_sq_sub_sq Casey.tangentCentre Casey.tangentCentre_mem_line Casey.tangentCentre_spec Casey.tangentCentre_spec_external Casey.tangentCentre_tangent Casey.tangentCentre_zero Casey.tangentLength Casey.tangentLength_eq_dist_of_perp Casey.tangentLength_sq Casey.tangentLength_tangentCentre Casey.tangentLength_zero"
 SOURCES="$(find $LIB -name '*.lean' | sort | tr '\n' ' ') $LIB.lean"
 [ -e .lake/packages/mathlib ] || lake exe cache get || { echo "FAIL: could not fetch Mathlib cache"; exit 1; }
 if grep -nE "\bsorry\b|\badmit\b|native_decide|\baxiom\b|#eval|\brun_cmd\b|\binitialize\b|\bIO\b|\bdebug\.|\bmacro|\belab|\bsyntax\b|\bnotation\b|\binfix|\bprefix\b|\bpostfix\b|import Lean|open Lean|\bset_option\b" $SOURCES; then
