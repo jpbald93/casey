@@ -18,7 +18,7 @@
 export PATH="$HOME/.elan/bin:$PATH"
 cd "$(dirname "$0")" || exit 1
 LIB="Casey"
-REQUIRED="Casey.casey Casey.casey_of_le Casey.casey_zero_radii_eq_ptolemy Casey.collinear_tangentCentre Casey.cospherical_of_dist_eq Casey.dist_tangentCentre_center Casey.dist_tangentCentre_sq_sub_sq Casey.tangentCentre Casey.tangentCentre_mem_line Casey.tangentCentre_spec Casey.tangentCentre_spec_external Casey.tangentCentre_tangent Casey.tangentCentre_zero Casey.tangentLength Casey.tangentLength_eq_dist_of_perp Casey.tangentLength_sq Casey.tangentLength_tangentCentre Casey.tangentLength_zero"
+REQUIRED="Casey.casey Casey.casey_of_le Casey.casey_zero_radii_eq_ptolemy Casey.collinear_tangentCentre Casey.cospherical_of_dist_eq Casey.dist_tangentCentre_center Casey.dist_tangentCentre_sq_sub_sq Casey.tangentCentre Casey.tangentCentre_mem_line Casey.tangentCentre_spec Casey.tangentCentre_spec_external Casey.tangentCentre_tangent Casey.tangentCentre_zero Casey.tangentLength Casey.tangentLength_eq_dist_of_perp Casey.tangentLength_sq Casey.tangentLength_tangentCentre Casey.tangentLength_zero Casey.l14_center_of_isIntTangentAt Casey.l14_casey Casey.l14_casey_ptolemy Casey.l14_dist_eq Casey.l14_dist_sq Casey.l14_wbtw Casey.l14w_casey Casey.Classical.tc_eq Casey.Classical.int_dist Casey.Classical.ext_dist Casey.Classical.signed_bridge Casey.Classical.no_mid Casey.Classical.cyc_angles Casey.Classical.casey_signed Casey.Classical.cov_CaseyFuss1_a Casey.Classical.cov_CaseyFuss1_b Casey.Classical.radicand_nonneg Casey.Classical.cov_CaseyFuss1_a_obligation Casey.Classical.cov_CaseyFuss1_b_obligation Casey.Classical.not_classical_CaseyFuss1_c"
 SOURCES="$(find $LIB -name '*.lean' | sort | tr '\n' ' ') $LIB.lean"
 [ -e .lake/packages/mathlib ] || lake exe cache get || { echo "FAIL: could not fetch Mathlib cache"; exit 1; }
 if grep -nE "\bsorry\b|\badmit\b|native_decide|\baxiom\b|#eval|\brun_cmd\b|\binitialize\b|\bIO\b|\bdebug\.|\bmacro|\belab|\bsyntax\b|\bnotation\b|\binfix|\bprefix\b|\bpostfix\b|import Lean|open Lean|\bset_option\b" $SOURCES; then
@@ -26,7 +26,7 @@ if grep -nE "\bsorry\b|\badmit\b|native_decide|\baxiom\b|#eval|\brun_cmd\b|\bini
 build=$(lake build $LIB 2>&1); bstatus=$?
 printf '%s\n' "$build" | tail -3
 [ "$bstatus" -eq 0 ] || { printf '%s\n' "$build"; echo "FAIL: build"; exit 1; }
-chk=$(mktemp --suffix=.lean -p . .gatecheck_XXXX)
+chk=".gatecheck_$$.lean"
 trap 'rm -f "$chk"' EXIT
 { echo "import $LIB"; for t in $REQUIRED; do echo "#print axioms $t"; done; } > "$chk"
 out=$(lake env lean "$chk" 2>&1); status=$?
